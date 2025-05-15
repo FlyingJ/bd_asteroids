@@ -1,5 +1,7 @@
 # project particulars
 # NOTE: save source code, not data or build artifacts
+venv/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
