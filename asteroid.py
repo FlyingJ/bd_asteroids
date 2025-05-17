@@ -1,4 +1,5 @@
 import pygame
+import random
 
 import constants as const
 
@@ -23,6 +24,21 @@ class Asteroid(CircleShape):
 
 	def move(self, dt):
 		self.position += self.velocity * dt
+
+	def split(self):
+		self.kill()
+		if self.radius <= const.ASTEROID_MIN_RADIUS:
+			return
+		random_angle = random.uniform(20, 50)
+		resultant_velocities = [
+			const.SPLIT_SPEED_AMP * self.velocity.rotate(random_angle),
+			const.SPLIT_SPEED_AMP * self.velocity.rotate(-random_angle)
+			]
+		resultant_radius = self.radius - const.ASTEROID_MIN_RADIUS
+
+		for velocity in resultant_velocities:
+			shard = Asteroid(self.position.x, self.position.y, resultant_radius)
+			shard.velocity = velocity
 
 	def update(self, dt):
 		self.move(dt)
