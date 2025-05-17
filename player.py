@@ -1,9 +1,10 @@
 import pygame
 
-import circleshape as cs
 import constants as const
 
-class Player(cs.CircleShape):
+from circleshape import CircleShape
+
+class Player(CircleShape):
 
 	def __init__(self, x, y):
 		super().__init__(x, y, const.PLAYER_RADIUS)
@@ -20,12 +21,15 @@ class Player(cs.CircleShape):
 	    return [a, b, c]
 
 	def draw(self, screen):
-		pygame.draw.polygon(
-			screen,
-			"white",
-			self.triangle(),
-			2)
-
+		try:
+			pygame.draw.polygon(
+				screen,
+				"white",
+				self.triangle(),
+				2)
+		except TypeError as e:
+			print(e)
+			
 	def move(self, dt):
 		forward = pygame.Vector2(0, 1).rotate(self.rotation)
 		self.position += forward * const.PLAYER_SPEED * dt
