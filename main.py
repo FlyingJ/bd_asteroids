@@ -9,6 +9,13 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    # create sprite groups to hold updatable and drawable objects
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    # and add Player to both
+    pl.Player.containers = (updatable, drawable)
+
+    # now it is safe to start creating more objects
     screen = pygame.display.set_mode((const.SCREEN_WIDTH,const.SCREEN_HEIGHT))
     player = pl.Player(const.SCREEN_WIDTH/2, const.SCREEN_HEIGHT/2)
 
@@ -17,8 +24,9 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
-        player.update(dt)
-        player.draw(screen)
+        updatable.update(dt)
+        for thing in drawable:
+            thing.draw(screen)
         pygame.display.flip()
         # time since tick in seconds
         dt = clock.tick(60) / 1000
