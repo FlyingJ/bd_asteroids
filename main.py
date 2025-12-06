@@ -5,6 +5,7 @@ import constants as const
 
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from logger import log_state
 from player import Player
 from shot import Shot
 
@@ -31,6 +32,8 @@ def main():
     player = Player(const.SCREEN_WIDTH/2, const.SCREEN_HEIGHT/2)
 
     while True:
+        log_state()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
